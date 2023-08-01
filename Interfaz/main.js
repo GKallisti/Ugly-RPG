@@ -62,19 +62,25 @@ let selectedPj
 let enemy
 let stage = 1
 
-
-let fortuna
-let zodiac = ["aries","taurus","cancer","leo","scorpio","virgo","capricorn","aquarius","libra"]
-let signo = zodiac[[Math.floor(Math.random() * zodiac.length)]]
+let fortuna;
+let zodiac = ["aries", "taurus", "cancer", "leo", "scorpio", "virgo", "capricorn", "aquarius", "libra"];
+let signo = zodiac[Math.floor(Math.random() * zodiac.length)];
 const Url = `https://aztro.sameerkumar.website/?sign=${signo}&day=today`;
-    fetch( Url, {
-        method: 'POST'
-    })
-    .then(response => response.json())
-    .then(json => {
-         fortuna = json;
-        console.log(fortuna.description);
+
+async function getFortuna() {
+  try {
+    const response = await fetch(Url, {
+      method: 'POST'
     });
+    const json = await response.json();
+    fortuna = json.current_date;
+    console.log(fortuna);
+  } catch (error) {
+    console.error('Error al obtener la fortuna:', error);
+  }
+}
+
+getFortuna();
 //Aca empiezan las funciones auxiliares
 function showToast(message) {
     Toastify({
