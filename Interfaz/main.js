@@ -334,9 +334,9 @@ function Ataques() {
                     pjv = Pj.hp
                     ea = en.ataque
 
-                    Toastify("Atacaste al " + enombre + "! Le quedan " + en.hp + " De vida ");
+                    showToast("Atacaste al " + enombre + "! Le quedan " + en.hp + " De vida ");
 
-                    Toastify( enombre + " te ha atacado! Te quedan " + pjv + " de vida! ");
+                    showToast( enombre + " te ha atacado! Te quedan " + pjv + " de vida! ");
                     
 
                 }
@@ -348,14 +348,14 @@ function Ataques() {
                     let loot = eoro + pjoro
                     Pj.oro = loot
 
-                    Toastify("Has derrotado al " + enombre + "! Ganaste " + eoro + " monedas de oro! ");
+                    showToast("Has derrotado al " + enombre + "! Ganaste " + eoro + " monedas de oro! ");
                     Victoria()
 
                 }
                 else if (Pj.hp <= 0 && en.hp > 0) {
 
                     ataqueS.style.visibility = "hidden"
-                    Toastify("Fuiste derrotado por " + enombre);
+                    showToast("Fuiste derrotado por " + enombre);
                     Derrota()
 
                 }
@@ -363,7 +363,7 @@ function Ataques() {
 
             botonH.addEventListener('click', (event) => {
         
-                Toastify( "Usas tu Scroll para transportarte a la Taberna...");
+                showToast( "Usas tu Scroll para transportarte a la Taberna...");
                 stage = "T"
                 imagen.src = "Imagenes/TavernaAll.png"
                 ataqueS.style.display = "none"
@@ -410,9 +410,9 @@ function Ataques() {
                     pja = Pj.ataque
                     pjv = Pj.hp
                     ea = en.ataque
-                    Toastify( "Atacaste al " + enombre + "! Le quedan " + en.hp + " De vida ");
+                    showToast( "Atacaste al " + enombre + "! Le quedan " + en.hp + " De vida ");
 
-                    Toastify( enombre + " te ha atacado! Te quedan " + pjv + " de vida! ");
+                    showToast( enombre + " te ha atacado! Te quedan " + pjv + " de vida! ");
                 }
                 else if (Pj.hp > 0 && en.hp <= 0) {
                     let eoro = en.oro
@@ -422,7 +422,7 @@ function Ataques() {
                     let loot = eoro + pjoro
                     Pj.oro = loot
 
-                    Toastify( "Has derrotado al " + enombre + "! Ganaste " + eoro + " monedas de oro! ");
+                    showToast( "Has derrotado al " + enombre + "! Ganaste " + eoro + " monedas de oro! ");
 
                     Victoria()
 
@@ -430,7 +430,7 @@ function Ataques() {
                 else if (Pj.hp <= 0 && en.hp > 0) {
 
                     ataqueS.style.visibility = "hidden"
-                    Toastify("Fuiste derrotado por " + enombre);
+                    showToast("Fuiste derrotado por " + enombre);
                 }
             })
             botonH.addEventListener('click', (event) => {
@@ -439,7 +439,7 @@ function Ataques() {
                 }
                 else {imagen.src = "Imagenes/HuirGCueva.png"}
                 ataqueS.style.visibility = "hidden"
-                Toastify( "Fuiste derrotado por una avalancha de piedras, para que semejante espada si no la ibas a usar?");
+                showToast( "Fuiste derrotado por una avalancha de piedras, para que semejante espada si no la ibas a usar?");
                
                 Derrota()
 
@@ -476,9 +476,9 @@ function Ataques() {
                     pjv = Pj.hp
                     ea = en.ataque
 
-                    Toastify( "Atacaste al " + enombre + "! Le quedan " + en.hp + " De vida ");
+                    showToast( "Atacaste al " + enombre + "! Le quedan " + en.hp + " De vida ");
 
-                    Toastify( enombre + " te ha atacado! Te quedan " + pjv + " de vida! ");
+                    showToast( enombre + " te ha atacado! Te quedan " + pjv + " de vida! ");
                 }
                 else if (Pj.hp > 0 && en.hp <= 0) {
                     let eoro = en.oro
@@ -488,14 +488,14 @@ function Ataques() {
                     let loot = eoro + pjoro
                     pjoro = loot
 
-                    Toastify( "Has derrotado al " + enombre + "! Ganaste " + eoro + " monedas de oro! ");
+                    showToast( "Has derrotado al " + enombre + "! Ganaste " + eoro + " monedas de oro! ");
                     Victoria()
 
                 }
                 else if (Pj.hp <= 0 && en.hp >= 0) {
 
                     ataqueS.style.visibility = "hidden"
-                    Toastify( "Fuiste derrotado por " + enombre);
+                    showToast( "Fuiste derrotado por " + enombre);
                     Derrota()
 
                 }
@@ -506,7 +506,7 @@ function Ataques() {
                 } else {imagen.src = "Imagenes/HuirNCueva.png"
                 }
                 ataqueS.style.visibility = "hidden"
-                Toastify( "Usas tu Bomba de humo para evadir el ataque y sigues tu camino a la siguiente ciudad... ");
+                showToast( "Usas tu Bomba de humo para evadir el ataque y sigues tu camino a la siguiente ciudad... ");
                 Victoria()
             })
     }
@@ -618,9 +618,9 @@ function selecPersonaje() {
     boton0.innerText = "MAGO"
     boton1.innerText = "GUERRERO"
     boton2.innerText = "NINJA"
-    seleccionardiv.style.display = "grid"
-    seleccionardiv.style.gridTemplateColumns = " repeat(3, 400px)"
-    seleccionardiv.style.gridTemplateRows = "50 px"
+    aplicarestilos(seleccionardiv, {
+        visibility: 'visible', display: 'grid', gridTemplateColumns: 'repeat(3, 400px)', gridTemplateRows: "50 px",
+      });
     boton0.addEventListener('mouseover', (event) => {
         imagen.src = "Imagenes/Mago.png"
     })
@@ -658,10 +658,13 @@ botonregreso.addEventListener('click', (event) => {
         boton0.innerText = "MAGO"
         boton1.innerText = "GUERRERO"
         boton2.innerText = "NINJA"
-        seleccionardiv.style.visibility = "visible"
-        seleccionardiv.style.display = "grid"
-        seleccionardiv.style.gridTemplateColumns = " repeat(3, 400px)"
-        seleccionardiv.style.gridTemplateRows = "50 px"
+        aplicarestilos(seleccionardiv, {
+            visibility: 'visible',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 400px)',
+            gridTemplateRows: "50 px",
+          });
+
         seleccionardiv.classList.remove('hidden')
         divlugares.style.display = "none"
         divlugares.style.gridTemplateColumns = " repeat(3, 400px)"
@@ -669,21 +672,7 @@ botonregreso.addEventListener('click', (event) => {
     }
     else if (stage == 3) {
 
-        Toastify({
-            text: "Hey! Volver atras aca es lo mismo que huir...",
-            duration: 4000,
-            newWindow: true,
-            close: true,
-            gravity: "top",
-            position: "left",
-            stopOnFocus: true,
-            offset: {
-                x: 150, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-            },
-            className: "info",
-            style: { background: "linear-gradient(to right, #00b09b, #96c93d)", }
-        }).showToast();
+        showToast( "Hey! Volver atras aca es lo mismo que huir...");
     }
     else if (stage == "T") {
         stage = 2
@@ -693,9 +682,9 @@ botonregreso.addEventListener('click', (event) => {
         botonc.innerText = "Bosque"
         seleccionardiv.style.visibility = "hidden"
         divlugares.classList.remove('hidden')
-        divlugares.style.visibility = "visible"
-        divlugares.style.display = "grid"
-        divlugares.style.gridTemplateColumns = " repeat(3, 400px)"
+        aplicarestilos(divlugares, {
+            visibility: 'visible', display: 'grid', gridTemplateColumns: 'repeat(3, 400px)', gridTemplateRows: "50 px",
+          });
         taberna.style.display = "none"
         localStorage.removeItem("enemy")
     }
@@ -707,15 +696,13 @@ botonregreso.addEventListener('click', (event) => {
     comprar.style.display = "none"
     apostardiv.style.display = "none"
     gitanadiv.style.display = "none"
-    taberna.style.visibility = "visible"
     taberna.classList.remove('hidden')
     botonQ.innerText = "Comprar"
     botonW.innerText = "Apostar"
     botonE.innerText = "Gitana"
-    taberna.style.display = "grid"
-    taberna.style.gridTemplateColumns = " repeat(3, 400px)"
-    taberna.style.gridTemplateRows = "50 px"
-
+    aplicarestilos(taberna, {
+        visibility: 'visible', display: 'grid', gridTemplateColumns: 'repeat(3, 400px)', gridTemplateRows: "50 px",
+      });
     selectedPj = JSON.parse(localStorage.getItem("selected"))
    }
 })
