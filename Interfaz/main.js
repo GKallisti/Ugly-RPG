@@ -75,7 +75,42 @@ const Url = `https://aztro.sameerkumar.website/?sign=${signo}&day=today`;
          fortuna = json;
         console.log(fortuna.description);
     });
-//Aca empiezan las funciones 
+//Aca empiezan las funciones auxiliares
+function showToast(message) {
+    Toastify({
+      text: message,
+      duration: 4000,
+      newWindow: true,
+      close: true,
+      gravity: "top",
+      position: "left",
+      stopOnFocus: true,
+      offset: {
+        x: 150, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+        y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+      },
+      className: "info",
+      style: { background: "linear-gradient(to right, #00b09b, #96c93d)" }
+    }).showToast();
+  }
+
+
+function aplicarestilos(element, styles) {
+    for (const [property, value] of Object.entries(styles)) {
+      element.style[property] = value;
+    }
+  }
+
+
+  function mostrar(element) {
+    element.classList.remove('hidden');
+    element.style.visibility = 'visible';
+    element.style.display = 'grid';
+  }
+
+  function ocultar(element) {
+    element.style.visibility = 'hidden';
+  }
 
 function atk(num1, num2) {
     let resultado = num1 - num2
@@ -83,34 +118,32 @@ function atk(num1, num2) {
 }
 function Victoria(){
     parrafod.classList.remove('hidden')
-        parrafod.style.visibility = "visible"
-        parrafod.style.display = "grid"
-        ataqueS.style.visibility = "hidden"
+        mostrar(parrafod)
+        ocultar(ataqueS)
+        ocultar(botonregreso)
         parrafo.style.display = "grid"
-        botonregreso.style.visibility = "hidden"
         imagen.src = "Imagenes/Victory.png"
         parrafo.innerText = "Felicidades viajero! Has llegado al final de esta aventura..."
               
 }
 function Derrota(){
-    parrafod.classList.remove('hidden')
-    parrafod.style.visibility = "visible"
-    parrafod.style.display = "grid"  
+    mostrar(parrafod) 
     parrafo.style.display = "grid"
-    ataqueS.style.visibility = "hidden"
-    botonregreso.style.visibility = "hidden"
+    ocultar(ataqueS)
+    ocultar(botonregreso)
     imagen.src = "Imagenes/Defeat.png"
     parrafo.innerText = "Oh! Mejor suerte la proxima..."
           }
 
 function Comprar() {
     stage = -1
-    taberna.style.display = "none"
-    comprar.style.visibility = "visible"
-    comprar.classList.remove('hidden')
-    comprar.style.display = "grid"
-    comprar.style.gridTemplateColumns = " repeat(2, 600px)"
-    comprar.style.gridTemplateRows = "80 px"
+    mostrar(comprar);
+    aplicarestilos(comprar, {
+      visibility: 'visible',
+      display: 'grid',
+      gridTemplateColumns: 'repeat(2, 600px)',
+      gridTemplateRows: '80px',
+    });
     botonPan.innerText = "Pan"
     botonCerv.innerText = "Cerveza de Raiz"
 
@@ -119,122 +152,44 @@ function Comprar() {
             selectedPj.oro = atk(selectedPj.oro, 5)
             selectedPj.hp = selectedPj.hp + 10
 
-            Toastify({
-                text: "Con el estomago lleno recuperas +10 Hp. Ahora tienes " + selectedPj.hp + " de vida y te quedan" + selectedPj.oro + " monedas de oro",
-                duration: 4000,
-                newWindow: true,
-                close: true,
-                gravity: "top",
-                position: "left",
-                stopOnFocus: true,
-                offset: {
-                    x: 150, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                    y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                },
-                className: "info",
-                style: { background: "linear-gradient(to right, #00b09b, #96c93d)", }
-            }).showToast();
+            showToast( "Con el estomago lleno recuperas +10 Hp. Ahora tienes " + selectedPj.hp + " de vida y te quedan" + selectedPj.oro + " monedas de oro");
         }
         else {
-            Toastify({
-                text: "No tenes suficientes monedas! ",
-                duration: 4000,
-                newWindow: true,
-                close: true,
-                gravity: "top",
-                position: "left",
-                stopOnFocus: true,
-                offset: {
-                    x: 150, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                    y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                },
-                className: "info",
-                style: { background: "linear-gradient(to right, #00b09b, #96c93d)", }
-            }).showToast();
+            showToast( "No tenes suficientes monedas! ");
         }   })
     botonCerv.addEventListener('click', (event) => {
         if (selectedPj > 10) {
             selectedPj.oro = atk(selectedPj.oro, 10)
             selectedPj.ataque = selectedPj.ataque - 5
-            Toastify({
-                text: "Esa cerveza estaba muy fuerte... Tenes ahora -5 puntos de ataque.",
-                duration: 4000,
-                newWindow: true,
-                close: true,
-                gravity: "top",
-                position: "left",
-                stopOnFocus: true,
-                offset: {
-                    x: 150, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                    y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                },
-                className: "info",
-                style: { background: "linear-gradient(to right, #00b09b, #96c93d)", }
-            }).showToast();
-        }
+            showToast(
+                "Esa cerveza estaba muy fuerte... Tenes ahora -5 puntos de ataque.");
+    }
         else {
-            Toastify({
-                text: "No tenes suficientes monedas! ",
-                duration: 4000,
-                newWindow: true,
-                close: true,
-                gravity: "top",
-                position: "left",
-                stopOnFocus: true,
-                offset: {
-                    x: 150, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                    y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                },
-                className: "info",
-                style: { background: "linear-gradient(to right, #00b09b, #96c93d)", }
-            }).showToast();
+            showToast( "No tenes suficientes monedas! ");
         }
     })
 }
 function apostar() {
     stage = -1
-    taberna.style.display = "none"
-    apostardiv.classList.remove('hidden')
-    apostardiv.style.display = "grid"
-    apostardiv.style.gridTemplateColumns = " repeat(2, 600px)"
-    apostardiv.style.gridTemplateRows = "80 px"
+    taberna.style.display = 'none';
+    mostrar(apostardiv);
+    aplicarestilos(apostardiv, {
+      visibility: 'visible',
+      display: 'grid',
+      gridTemplateColumns: 'repeat(2, 600px)',
+      gridTemplateRows: '80px',
+    });
+
+
 
     diez.addEventListener('click', (event) => {
         if (selectedPj.oro > 10) {
             selectedPj.oro = selectedPj.oro - 10
             selectedPj.oro = selectedPj.oro + Math.ceil(Math.random() * 20)
-            Toastify({
-                text: "Apostaste 10 Monedas de oro... Ahora tenes " + selectedPj.oro + " monedas de oro.",
-                duration: 4000,
-                newWindow: true,
-                close: true,
-                gravity: "top",
-                position: "left",
-                stopOnFocus: true,
-                offset: {
-                    x: 150, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                    y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                },
-                className: "info",
-                style: { background: "linear-gradient(to right, #00b09b, #96c93d)", }
-            }).showToast();
+            showToast("Apostaste 10 Monedas de oro... Ahora tenes " + selectedPj.oro + " monedas de oro." );
         }
         else {
-            Toastify({
-                text: "No tenes suficientes monedas para apostar! ",
-                duration: 4000,
-                newWindow: true,
-                close: true,
-                gravity: "top",
-                position: "left",
-                stopOnFocus: true,
-                offset: {
-                    x: 150, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                    y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                },
-                className: "info",
-                style: { background: "linear-gradient(to right, #00b09b, #96c93d)", }
-            }).showToast();
+            showToast( "No tenes suficientes monedas para apostar! " );
 
         }
 
@@ -244,41 +199,10 @@ function apostar() {
         if (selectedPj.oro > 20) {
             selectedPj.oro = selectedPj.oro - 20
             selectedPj.oro = selectedPj.oro + Math.ceil(Math.random() * 50)
-            Toastify({
-                text: "Apostaste 20 Monedas de oro... Ahora tenes " + selectedPj.oro + " monedas de oro.",
-                duration: 4000,
-                newWindow: true,
-                close: true,
-                gravity: "top",
-                position: "left",
-                stopOnFocus: true,
-                offset: {
-                    x: 150, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                    y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                },
-                className: "info",
-                style: { background: "linear-gradient(to right, #00b09b, #96c93d)", }
-            }).showToast();
-
-
+            showToast('Apostaste 20 Monedas de oro... Ahora tenes " + selectedPj.oro + " monedas de oro.')
         }
         else {
-            Toastify({
-                text: "No tenes suficientes monedas para apostar! ",
-                duration: 4000,
-                newWindow: true,
-                close: true,
-                gravity: "top",
-                position: "left",
-                stopOnFocus: true,
-                offset: {
-                    x: 150, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                    y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                },
-                className: "info",
-                style: { background: "linear-gradient(to right, #00b09b, #96c93d)", }
-            }).showToast();
-
+            showToast("No tienes suficientes monedas!");
         }
 
     })
@@ -288,12 +212,14 @@ function apostar() {
 }
 function Gitana() {
     stage = -1
-    imagen.src = "Imagenes/Gitana.png"
-    taberna.style.display = "none"
-    gitanadiv.classList.remove('hidden')
-    gitanadiv.style.display = "grid"
-    gitanadiv.style.gridTemplateColumns = " repeat(2, 600px)"
-    gitanadiv.style.gridTemplateRows = "80 px"
+    taberna.style.display = "none";
+    mostrar(gitanadiv);
+    aplicarestilos(gitanadiv, {
+      visibility: "visible",
+      display: "grid",
+      gridTemplateColumns: "repeat(2, 600px)",
+      gridTemplateRows: "80px"
+    });
 
     encantarb.addEventListener('click', (event) => {
         if(selectedPj.oro >20){
@@ -303,38 +229,16 @@ function Gitana() {
             selectedPj.oro = selectedPj.oro - 20
             armanueva = armapj + " encantada"
             selectedPj.inventario = inventario.splice(0,1,armanueva)
-            Toastify({
-                text: "Tu arma ha sido encantada! Ahora tienes " + armanueva + " Su daño es de " + selectedPj.ataque ,
-                duration: 4000,
-                newWindow: true,
-                close: true,
-                gravity: "top",
-                position: "left",
-                stopOnFocus: true,
-                offset: {
-                    x: 150, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                    y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                },
-                className: "info",
-                style: { background: "linear-gradient(to right, #00b09b, #96c93d)", }
-            }).showToast();
+            showToast(
+                "Tu arma ha sido encantada! Ahora tienes " +
+                  armanueva +
+                  " Su daño es de " +
+                  selectedPj.ataque
+              );
         }
         else {
-            Toastify({
-                text: "No tenes suficientes monedas! ",
-                duration: 4000,
-                newWindow: true,
-                close: true,
-                gravity: "top",
-                position: "left",
-                stopOnFocus: true,
-                offset: {
-                    x: 150, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                    y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                },
-                className: "info",
-                style: { background: "linear-gradient(to right, #00b09b, #96c93d)", }
-            }).showToast();
+            showToast("No tienes suficientes monedas!");
+
         } 
 
     })
@@ -342,43 +246,18 @@ function Gitana() {
     fortunab.addEventListener('click', (event) => {
         if(selectedPj.oro > 10){
         selectedPj.oro = selectedPj.oro - 10
-        parrafod.classList.remove('hidden')
-        parrafod.style.visibility = "visible"
+        mostrar(parrafod)
         parrafo.style.visibility = "visible"
         let coso = fortuna.description
         parrafo.innerText = coso
-        Toastify({
-            text: "Le das 10 monedas de oro a la gitana y escuchas atentamente mientras ella saca sus cartas... ",
-            duration: 4000,
-            newWindow: true,
-            close: true,
-            gravity: "top",
-            position: "left",
-            stopOnFocus: true,
-            offset: {
-                x: 150, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-            },
-            className: "info",
-            style: { background: "linear-gradient(to right, #00b09b, #96c93d)", }
-        }).showToast();
+        showToast(
+            "Le das 10 monedas de oro a la gitana y escuchas atentamente mientras ella saca sus cartas..."
+          );
     }
     else {
-        Toastify({
-            text: "No tienes suficientes monedas para consultar por tu destino, Ojala no te cruces enemigos mas adelante..." ,
-            duration: 4000,
-            newWindow: true,
-            close: true,
-            gravity: "top",
-            position: "left",
-            stopOnFocus: true,
-            offset: {
-                x: 150, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-            },
-            className: "info",
-            style: { background: "linear-gradient(to right, #00b09b, #96c93d)", }
-        }).showToast();
+        showToast(
+            "No tienes suficientes monedas para consultar por tu destino. Ojalá no te cruces enemigos más adelante..."
+          );
     }
     })
 
@@ -387,17 +266,20 @@ function Taberna() {
 
     stage = "T"
     imagen.src = "Imagenes/TavernaAll.png"
-    divlugares.style.display = "none"
-    divlugares.style.visibility = "hidden"
-    taberna.style.visibility = "visible"
+    ocultar(divlugares)
+    mostrar(taberna)
     taberna.classList.remove('hidden')
 
     botonQ.innerText = "Comprar"
     botonW.innerText = "Apostar"
     botonE.innerText = "Gitana"
-    taberna.style.display = "grid"
-    taberna.style.gridTemplateColumns = " repeat(3, 400px)"
-    taberna.style.gridTemplateRows = "50 px"
+
+    aplicarestilos(taberna, {
+        visibility: "visible",
+        display: "grid",
+        gridTemplateColumns: "repeat(3, 400px)",
+        gridTemplateRows: "50 px"
+      });
 
     selectedPj = JSON.parse(localStorage.getItem("selected"))
 
@@ -452,37 +334,9 @@ function Ataques() {
                     pjv = Pj.hp
                     ea = en.ataque
 
-                    Toastify({
-                        text: "Atacaste al " + enombre + "! Le quedan " + en.hp + " De vida ",
-                        duration: 4000,
-                        newWindow: true,
-                        close: true,
-                        gravity: "top",
-                        position: "left",
-                        stopOnFocus: true,
-                        offset: {
-                            x: 150, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                        },
-                        className: "info",
-                        style: { background: "linear-gradient(to right, #00b09b, #96c93d)", }
-                    }).showToast();
+                    Toastify("Atacaste al " + enombre + "! Le quedan " + en.hp + " De vida ");
 
-                    Toastify({
-                        text: enombre + " te ha atacado! Te quedan " + pjv + " de vida! ",
-                        duration: 4000,
-                        newWindow: true,
-                        close: true,
-                        gravity: "top",
-                        position: "left",
-                        stopOnFocus: true,
-                        offset: {
-                            x: 150, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                        },
-                        className: "info",
-                        style: { background: "linear-gradient(to right, #00b09b, #96c93d)", }
-                    }).showToast();
+                    Toastify( enombre + " te ha atacado! Te quedan " + pjv + " de vida! ");
                     
 
                 }
@@ -494,42 +348,14 @@ function Ataques() {
                     let loot = eoro + pjoro
                     Pj.oro = loot
 
-                    Toastify({
-                        text: "Has derrotado al " + enombre + "! Ganaste " + eoro + " monedas de oro! ",
-                        duration: 4000,
-                        newWindow: true,
-                        close: true,
-                        gravity: "top",
-                        position: "left",
-                        stopOnFocus: true,
-                        offset: {
-                            x: 150, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                        },
-                        className: "info",
-                        style: { background: "linear-gradient(to right, #00b09b, #96c93d)", }
-                    }).showToast();
+                    Toastify("Has derrotado al " + enombre + "! Ganaste " + eoro + " monedas de oro! ");
                     Victoria()
 
                 }
                 else if (Pj.hp <= 0 && en.hp > 0) {
 
                     ataqueS.style.visibility = "hidden"
-                    Toastify({
-                        text: "Fuiste derrotado por " + enombre,
-                        duration: 4000,
-                        newWindow: true,
-                        close: true,
-                        gravity: "top",
-                        position: "left",
-                        stopOnFocus: true,
-                        offset: {
-                            x: 150, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                        },
-                        className: "info",
-                        style: { background: "linear-gradient(to right, #00b09b, #96c93d)", }
-                    }).showToast();
+                    Toastify("Fuiste derrotado por " + enombre);
                     Derrota()
 
                 }
@@ -537,21 +363,7 @@ function Ataques() {
 
             botonH.addEventListener('click', (event) => {
         
-                Toastify({
-                    text: "Usas tu Scroll para transportarte a la Taberna...",
-                    duration: 4000,
-                    newWindow: true,
-                    close: true,
-                    gravity: "top",
-                    position: "left",
-                    stopOnFocus: true,
-                    offset: {
-                        x: 150, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                        y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                    },
-                    className: "info",
-                    style: { background: "linear-gradient(to right, #00b09b, #96c93d)", }
-                }).showToast();
+                Toastify( "Usas tu Scroll para transportarte a la Taberna...");
                 stage = "T"
                 imagen.src = "Imagenes/TavernaAll.png"
                 ataqueS.style.display = "none"
@@ -598,37 +410,9 @@ function Ataques() {
                     pja = Pj.ataque
                     pjv = Pj.hp
                     ea = en.ataque
-                    Toastify({
-                        text: "Atacaste al " + enombre + "! Le quedan " + en.hp + " De vida ",
-                        duration: 4000,
-                        newWindow: true,
-                        close: true,
-                        gravity: "top",
-                        position: "left",
-                        stopOnFocus: true,
-                        offset: {
-                            x: 150, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                        },
-                        className: "info",
-                        style: { background: "linear-gradient(to right, #00b09b, #96c93d)", }
-                    }).showToast();
+                    Toastify( "Atacaste al " + enombre + "! Le quedan " + en.hp + " De vida ");
 
-                    Toastify({
-                        text: enombre + " te ha atacado! Te quedan " + pjv + " de vida! ",
-                        duration: 4000,
-                        newWindow: true,
-                        close: true,
-                        gravity: "top",
-                        position: "left",
-                        stopOnFocus: true,
-                        offset: {
-                            x: 150, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                        },
-                        className: "info",
-                        style: { background: "linear-gradient(to right, #00b09b, #96c93d)", }
-                    }).showToast();
+                    Toastify( enombre + " te ha atacado! Te quedan " + pjv + " de vida! ");
                 }
                 else if (Pj.hp > 0 && en.hp <= 0) {
                     let eoro = en.oro
@@ -638,21 +422,7 @@ function Ataques() {
                     let loot = eoro + pjoro
                     Pj.oro = loot
 
-                    Toastify({
-                        text: "Has derrotado al " + enombre + "! Ganaste " + eoro + " monedas de oro! ",
-                        duration: 4000,
-                        newWindow: true,
-                        close: true,
-                        gravity: "top",
-                        position: "left",
-                        stopOnFocus: true,
-                        offset: {
-                            x: 150, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                        },
-                        className: "info",
-                        style: { background: "linear-gradient(to right, #00b09b, #96c93d)", }
-                    }).showToast();
+                    Toastify( "Has derrotado al " + enombre + "! Ganaste " + eoro + " monedas de oro! ");
 
                     Victoria()
 
@@ -660,21 +430,7 @@ function Ataques() {
                 else if (Pj.hp <= 0 && en.hp > 0) {
 
                     ataqueS.style.visibility = "hidden"
-                    Toastify({
-                        text: "Fuiste derrotado por " + enombre,
-                        duration: 4000,
-                        newWindow: true,
-                        close: true,
-                        gravity: "top",
-                        position: "left",
-                        stopOnFocus: true,
-                        offset: {
-                            x: 150, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                        },
-                        className: "info",
-                        style: { background: "linear-gradient(to right, #00b09b, #96c93d)", }
-                    }).showToast();
+                    Toastify("Fuiste derrotado por " + enombre);
                 }
             })
             botonH.addEventListener('click', (event) => {
@@ -683,21 +439,7 @@ function Ataques() {
                 }
                 else {imagen.src = "Imagenes/HuirGCueva.png"}
                 ataqueS.style.visibility = "hidden"
-                Toastify({
-                    text: "Fuiste derrotado por una avalancha de piedras, para que semejante espada si no la ibas a usar?",
-                    duration: 4000,
-                    newWindow: true,
-                    close: true,
-                    gravity: "top",
-                    position: "left",
-                    stopOnFocus: true,
-                    offset: {
-                        x: 150, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                        y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                    },
-                    className: "info",
-                    style: { background: "linear-gradient(to right, #00b09b, #96c93d)", }
-                }).showToast();
+                Toastify( "Fuiste derrotado por una avalancha de piedras, para que semejante espada si no la ibas a usar?");
                
                 Derrota()
 
@@ -734,37 +476,9 @@ function Ataques() {
                     pjv = Pj.hp
                     ea = en.ataque
 
-                    Toastify({
-                        text: "Atacaste al " + enombre + "! Le quedan " + en.hp + " De vida ",
-                        duration: 4000,
-                        newWindow: true,
-                        close: true,
-                        gravity: "top",
-                        position: "left",
-                        stopOnFocus: true,
-                        offset: {
-                            x: 150, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                        },
-                        className: "info",
-                        style: { background: "linear-gradient(to right, #00b09b, #96c93d)", }
-                    }).showToast();
+                    Toastify( "Atacaste al " + enombre + "! Le quedan " + en.hp + " De vida ");
 
-                    Toastify({
-                        text: enombre + " te ha atacado! Te quedan " + pjv + " de vida! ",
-                        duration: 4000,
-                        newWindow: true,
-                        close: true,
-                        gravity: "top",
-                        position: "left",
-                        stopOnFocus: true,
-                        offset: {
-                            x: 150, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                        },
-                        className: "info",
-                        style: { background: "linear-gradient(to right, #00b09b, #96c93d)", }
-                    }).showToast();
+                    Toastify( enombre + " te ha atacado! Te quedan " + pjv + " de vida! ");
                 }
                 else if (Pj.hp > 0 && en.hp <= 0) {
                     let eoro = en.oro
@@ -774,42 +488,14 @@ function Ataques() {
                     let loot = eoro + pjoro
                     pjoro = loot
 
-                    Toastify({
-                        text: "Has derrotado al " + enombre + "! Ganaste " + eoro + " monedas de oro! ",
-                        duration: 4000,
-                        newWindow: true,
-                        close: true,
-                        gravity: "top",
-                        position: "left",
-                        stopOnFocus: true,
-                        offset: {
-                            x: 150, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                        },
-                        className: "info",
-                        style: { background: "linear-gradient(to right, #00b09b, #96c93d)", }
-                    }).showToast();
+                    Toastify( "Has derrotado al " + enombre + "! Ganaste " + eoro + " monedas de oro! ");
                     Victoria()
 
                 }
                 else if (Pj.hp <= 0 && en.hp >= 0) {
 
                     ataqueS.style.visibility = "hidden"
-                    Toastify({
-                        text: "Fuiste derrotado por " + enombre,
-                        duration: 4000,
-                        newWindow: true,
-                        close: true,
-                        gravity: "top",
-                        position: "left",
-                        stopOnFocus: true,
-                        offset: {
-                            x: 150, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                        },
-                        className: "info",
-                        style: { background: "linear-gradient(to right, #00b09b, #96c93d)", }
-                    }).showToast();
+                    Toastify( "Fuiste derrotado por " + enombre);
                     Derrota()
 
                 }
@@ -820,21 +506,7 @@ function Ataques() {
                 } else {imagen.src = "Imagenes/HuirNCueva.png"
                 }
                 ataqueS.style.visibility = "hidden"
-                Toastify({
-                    text: "Usas tu Bomba de humo para evadir el ataque y sigues tu camino a la siguiente ciudad... ",
-                    duration: 4000,
-                    newWindow: true,
-                    close: true,
-                    gravity: "top",
-                    position: "left",
-                    stopOnFocus: true,
-                    offset: {
-                        x: 150, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                        y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                    },
-                    className: "info",
-                    style: { background: "linear-gradient(to right, #00b09b, #96c93d)", }
-                }).showToast();
+                Toastify( "Usas tu Bomba de humo para evadir el ataque y sigues tu camino a la siguiente ciudad... ");
                 Victoria()
             })
     }
